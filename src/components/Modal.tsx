@@ -1,6 +1,5 @@
 import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
 import { ReactNode } from 'react'
-import Button from './ui/Button'
 
 interface IModalProps {
   isOpen: boolean;
@@ -9,7 +8,7 @@ interface IModalProps {
   children: ReactNode;
 }
 
-const Modal = ({isOpen, onClose, title}: IModalProps) => {
+const Modal = ({isOpen, onClose, title, children}: IModalProps) => {
 
   return (
     <>
@@ -18,16 +17,12 @@ const Modal = ({isOpen, onClose, title}: IModalProps) => {
           <div className="flex min-h-full items-center justify-center p-4">
             <DialogPanel
               transition
-              className="w-full max-w-md rounded-xl bg-cyan-500 shadow-lg p-6 duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0"
+              className="w-full max-w-md rounded-lg bg-white shadow-lg p-6 duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0"
             >
-              {title && <DialogTitle as="h3" className="text-base/7 font-medium text-white">
+              {title && <DialogTitle as="h3" className="text-base/7 font-medium text-gray-800">
                 {title}
               </DialogTitle>}
-              
-              <div className="mt-4 flex space-x-3">
-                <Button onClick={close} className="bg-indigo-700 hover:bg-indigo-800" width="w-full">Close</Button>
-                <Button onClick={close} className="bg-gray-400 hover:bg-gray-500" width="w-full">Cancel</Button>
-              </div>
+              <div className="mt-4">{children}</div>
             </DialogPanel>
           </div>
         </div>
