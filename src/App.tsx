@@ -1,12 +1,13 @@
 import { ChangeEvent, FormEvent, useState } from "react";
-import { formInputsList, productList } from "./components/data";
+import { colors, formInputsList, productList } from "./components/data";
 import Modal from "./components/Modal";
-import ProductCard from "./components/ProductCard";
+import ProductCard from "./components/ui/ProductCard";
 import Button from "./components/ui/Button";
 import Input from "./components/ui/Input";
 import { IProduct } from "./components/interfaces";
 import { productValidation } from "./components/validation";
 import ErrorMessage from "./components/ui/ErrorMessage";
+import CircleColor from "./components/ui/CircleColor";
 
 const App = () => {
   const defaultProduct = {
@@ -24,6 +25,7 @@ const App = () => {
   // state
   const [isOpen, setIsOpen] = useState(false)
   const [errors, setErrors] = useState({title: "", description: "", src: "", price: "",})
+  const [selectedColors, setSelectedColors] = useState<string[]>([])
   const [product, setProduct] = useState<IProduct>(defaultProduct)
   const OnChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -31,7 +33,7 @@ const App = () => {
       ...prevProduct,
       [name]: value,
     }));
-    setErrors((errors) => ({
+    setErrors( ({
       ...errors,
       [name]: "",
     }));
@@ -72,6 +74,17 @@ const App = () => {
       <ErrorMessage message={errors[input.name]} />
     </div>
   ));
+  const renderCircleColor = colors.map(color => <CircleColor key={color} color={color} 
+    onClick={() => {
+      if (selectedColors.includes(color)) {
+        setSelectedColors(prev => prev.filter(item => item !== color))
+        return;
+      }
+      setSelectedColors((prev) => [...prev, color])
+      }
+    }
+  />)
+  const renderSelectedColors = selectedColors.map(selectedColor => <span className="p-1 mr-1 rounded-md text-sm text-white" style={{backgroundColor: selectedColor}}>{selectedColor}</span>)
 
   return (
     <main className="container mx-auto">
@@ -82,6 +95,12 @@ const App = () => {
       <Modal isOpen={isOpen} onClose={close} title="Add A NEW PRODUCT">
         <form className="space-y-3" onSubmit={submitHandler}>
           {renderFormInputsList}
+          <div className="flex items-center flex-wrap space-x-1 space-y-1">
+            {renderSelectedColors}
+          </div>
+          <div className="flex items-center space-x-1 my-3">
+            {renderCircleColor}
+          </div>
           <div className="flex items-center space-x-3">
             <Button className="bg-indigo-700 hover:bg-indigo-800" width="w-full">Submit</Button>
             <Button onClick={closeHandler} className="bg-gray-400 hover:bg-gray-500" width="w-full">Cancel</Button>
