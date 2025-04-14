@@ -3,9 +3,10 @@ import { formInputsList, productList } from "./components/data";
 import Modal from "./components/Modal";
 import ProductCard from "./components/ProductCard";
 import Button from "./components/ui/Button";
-import Input from "./components/Input";
+import Input from "./components/ui/Input";
 import { IProduct } from "./components/interfaces";
 import { productValidation } from "./components/validation";
+import ErrorMessage from "./components/ui/ErrorMessage";
 
 const App = () => {
   const defaultProduct = {
@@ -19,14 +20,20 @@ const App = () => {
       src: "",
     },
   }
+
   // state
   const [isOpen, setIsOpen] = useState(false)
+  const [errors, setErrors] = useState({title: "", description: "", src: "", price: "",})
   const [product, setProduct] = useState<IProduct>(defaultProduct)
   const OnChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setProduct((prevProduct) => ({
       ...prevProduct,
       [name]: value,
+    }));
+    setErrors((errors) => ({
+      ...errors,
+      [name]: "",
     }));
   }
 
@@ -42,6 +49,13 @@ const App = () => {
     event.preventDefault();
     const errors = productValidation({title: product.title, description: product.description, src: product.src, price: product.price});
     console.log(errors);
+
+    const isValid = Object.values(errors).some(e => e === "") && Object.values(errors).every(e => e === "")
+    if (!isValid) {
+      setErrors(errors)
+      return
+    }
+    setErrors({title: "", description: "", src: "", price: ""})
   }
 
   function closeHandler() {
@@ -55,6 +69,7 @@ const App = () => {
     <div className="flex flex-col space-y-3" key={input.id}>
       <label htmlFor={input.id} className="mb-[2px] text-sm font-medium text-gray-700" >{input.label}</label>
       <Input type="text" id={input.id} name={input.name} value={product[input.name]} onChange={OnChangeHandler} />
+      <ErrorMessage message={errors[input.name]} />
     </div>
   ));
 
