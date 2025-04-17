@@ -8,6 +8,7 @@ import { IProduct } from "./components/interfaces";
 import { productValidation } from "./components/validation";
 import ErrorMessage from "./components/ui/ErrorMessage";
 import CircleColor from "./components/ui/CircleColor";
+import { v4 as uuid } from "uuid";
 
 const App = () => {
   const defaultProduct = {
@@ -26,6 +27,7 @@ const App = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [errors, setErrors] = useState({title: "", description: "", src: "", price: "",})
   const [selectedColors, setSelectedColors] = useState<string[]>([])
+  const [products, setProducts] = useState<IProduct[]>(productList)
   const [product, setProduct] = useState<IProduct>(defaultProduct)
   const OnChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -50,7 +52,6 @@ const App = () => {
   function submitHandler(event: FormEvent<HTMLFormElement>): void {
     event.preventDefault();
     const errors = productValidation({title: product.title, description: product.description, src: product.src, price: product.price});
-    console.log(errors);
 
     const isValid = Object.values(errors).some(e => e === "") && Object.values(errors).every(e => e === "")
     if (!isValid) {
@@ -58,6 +59,10 @@ const App = () => {
       return
     }
     setErrors({title: "", description: "", src: "", price: ""})
+    setProducts(prev => [{...product, id: uuid(), colors: selectedColors}, ...prev])
+    setProduct(defaultProduct)
+    setSelectedColors([])
+    close()
   }
 
   function closeHandler() {
@@ -66,7 +71,7 @@ const App = () => {
   }
 
   // Render
-  const renderProductList = productList.map(product => <ProductCard key={product.id} product={product}/>);
+  const renderProductList = products.map(product => <ProductCard key={product.id} product={product}/>);
   const renderFormInputsList = formInputsList.map(input => (
     <div className="flex flex-col space-y-3" key={input.id}>
       <label htmlFor={input.id} className="mb-[2px] text-sm font-medium text-gray-700" >{input.label}</label>
@@ -84,7 +89,7 @@ const App = () => {
       }
     }
   />)
-  const renderSelectedColors = selectedColors.map(selectedColor => <span className="p-1 mr-1 rounded-md text-sm text-white" style={{backgroundColor: selectedColor}}>{selectedColor}</span>)
+  const renderSelectedColors = selectedColors.map(selectedColor => <span key={selectedColor} className="p-1 mr-1 rounded-md text-sm text-white" style={{backgroundColor: selectedColor}}>{selectedColor}</span>)
 
   return (
     <main className="container mx-auto">
