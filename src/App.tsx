@@ -1,5 +1,5 @@
 import { ChangeEvent, FormEvent, useState } from "react";
-import { colors, formInputsList, productList } from "./components/data";
+import { categories, colors, formInputsList, productList } from "./components/data";
 import Modal from "./components/Modal";
 import ProductCard from "./components/ui/ProductCard";
 import Button from "./components/ui/Button";
@@ -9,6 +9,7 @@ import { productValidation } from "./components/validation";
 import ErrorMessage from "./components/ui/ErrorMessage";
 import CircleColor from "./components/ui/CircleColor";
 import { v4 as uuid } from "uuid";
+import Select from "./components/ui/Select";
 
 const App = () => {
   const defaultProduct = {
@@ -29,6 +30,7 @@ const App = () => {
   const [selectedColors, setSelectedColors] = useState<string[]>([])
   const [products, setProducts] = useState<IProduct[]>(productList)
   const [product, setProduct] = useState<IProduct>(defaultProduct)
+  const [selectedCategory, setSelectedCategory] = useState(categories[0])
   const OnChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setProduct((prevProduct) => ({
@@ -59,7 +61,7 @@ const App = () => {
       return
     }
     setErrors({title: "", description: "", src: "", price: ""})
-    setProducts(prev => [{...product, id: uuid(), colors: selectedColors}, ...prev])
+    setProducts(prev => [{...product, id: uuid(), colors: selectedColors, category: selectedCategory}, ...prev])
     setProduct(defaultProduct)
     setSelectedColors([])
     close()
@@ -67,6 +69,7 @@ const App = () => {
 
   function closeHandler() {
     setProduct(defaultProduct)
+    setSelectedColors([])
     close();
   }
 
@@ -100,6 +103,7 @@ const App = () => {
       <Modal isOpen={isOpen} onClose={close} title="Add A NEW PRODUCT">
         <form className="space-y-3" onSubmit={submitHandler}>
           {renderFormInputsList}
+          <Select selected={selectedCategory} setSelected={setSelectedCategory} />
           <div className="flex items-center flex-wrap space-x-1 space-y-1">
             {renderSelectedColors}
           </div>
