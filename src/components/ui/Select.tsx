@@ -7,7 +7,7 @@ import { categories } from '../data'
 import { ICategory } from '../interfaces'
 
 interface IProps {
-  selected: ICategory;
+  selected: {name: string, src: string};
   setSelected: (category: ICategory) => void;
 }
 

@@ -189,7 +189,7 @@ const App = () => {
           {renderEditProduct('description', 'Product Description', 'description')}
           {renderEditProduct('src', 'Product Image URL', 'src')}
           {renderEditProduct('price', 'Product Price', 'price')}
-          {/* <Select selected={selectedCategory} setSelected={setSelectedCategory} /> */}
+          <Select selected={editProduct.category} setSelected={(value) => setEditProduct({...editProduct, category: value})} />
           <div className="flex items-center flex-wrap space-x-1 space-y-1">
             {selectedColors.concat(editProduct.colors).map(selectedColor => (
               <span key={selectedColor} className="p-1 mr-1 rounded-md text-sm text-white" style={{backgroundColor: selectedColor}}>
