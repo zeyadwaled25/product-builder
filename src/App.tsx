@@ -98,7 +98,7 @@ const App = () => {
     }
 
     const updatedProducts = [...products]
-    updatedProducts[editProductIdx] = editProduct
+    updatedProducts[editProductIdx] = {...editProduct, colors: selectedColors.concat(editProduct.colors)}
     setProducts(updatedProducts)
 
     setErrors({title: "", description: "", src: "", price: ""})
@@ -135,6 +135,13 @@ const App = () => {
     onClick={() => {
       if (selectedColors.includes(color)) {
         setSelectedColors(prev => prev.filter(item => item !== color))
+        return;
+      }
+      if (editProduct.colors.includes(color)) {
+        setEditProduct(prev => ({
+          ...prev,
+          colors: prev.colors.filter(item => item !== color)
+        }));        
         return;
       }
       setSelectedColors((prev) => [...prev, color])
@@ -181,7 +188,19 @@ const App = () => {
           {renderEditProduct('title', 'Product Title', 'title')}
           {renderEditProduct('description', 'Product Description', 'description')}
           {renderEditProduct('src', 'Product Image URL', 'src')}
-          {renderEditProduct('price', 'Product Price', 'price')}  
+          {renderEditProduct('price', 'Product Price', 'price')}
+          {/* <Select selected={selectedCategory} setSelected={setSelectedCategory} /> */}
+          <div className="flex items-center flex-wrap space-x-1 space-y-1">
+            {selectedColors.concat(editProduct.colors).map(selectedColor => (
+              <span key={selectedColor} className="p-1 mr-1 rounded-md text-sm text-white" style={{backgroundColor: selectedColor}}>
+                {selectedColor}
+              </span>
+              ))
+            }
+          </div>
+          <div className="flex items-center space-x-1 my-3">
+            {renderCircleColor}
+          </div>
           <div className="flex items-center space-x-3">
             <Button className="bg-indigo-700 hover:bg-indigo-800" width="w-full">Submit</Button>
             <Button onClick={closeHandler} className="bg-gray-400 hover:bg-gray-500" width="w-full">Cancel</Button>
