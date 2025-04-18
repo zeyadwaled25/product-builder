@@ -161,7 +161,9 @@ const App = () => {
 
   return (
     <main className="container mx-auto">
-      <Button onClick={open} className="bg-indigo-700" width="w-full">Add New Product</Button>
+      <div className="text-center m-3 p-5 mb-0 pb-0">
+        <Button onClick={open} className="bg-indigo-700 hover:bg-indigo-800 hover:cursor-pointer transition" width="w-fit">Add New Product</Button>
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 m-3 p-5 rounded-lg">
         {renderProductList}
       </div>
@@ -177,8 +179,8 @@ const App = () => {
             {renderCircleColor}
           </div>
           <div className="flex items-center space-x-3">
-            <Button className="bg-indigo-700 hover:bg-indigo-800" width="w-full">Submit</Button>
-            <Button onClick={closeHandler} className="bg-gray-400 hover:bg-gray-500" width="w-full">Cancel</Button>
+            <Button className="bg-indigo-700 hover:bg-indigo-800 hover:cursor-pointer transition" width="w-full">Submit</Button>
+            <Button onClick={closeHandler} className="bg-gray-400 hover:bg-gray-500 hover:cursor-pointer transition" width="w-full">Cancel</Button>
           </div>
         </form>
       </Modal>
@@ -202,8 +204,8 @@ const App = () => {
             {renderCircleColor}
           </div>
           <div className="flex items-center space-x-3">
-            <Button className="bg-indigo-700 hover:bg-indigo-800" width="w-full">Submit</Button>
-            <Button onClick={closeHandler} className="bg-gray-400 hover:bg-gray-500" width="w-full">Cancel</Button>
+            <Button className="bg-indigo-700 hover:bg-indigo-800  hover:cursor-pointer" width="w-full">Submit</Button>
+            <Button onClick={closeHandler} className="bg-gray-400 hover:bg-gray-500 hover:cursor-pointer" width="w-full">Cancel</Button>
           </div>
         </form>
       </Modal>
