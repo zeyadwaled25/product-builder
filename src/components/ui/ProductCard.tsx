@@ -10,15 +10,20 @@ interface IProps {
   openEdit: () => void;
   idx: number;
   setEditProductIdx: (idx: number) => void
+  isOpenConfirm: () => void;
 }
 
-const ProductCard = ({product, setEditProduct, openEdit, idx, setEditProductIdx}: IProps) => {
+const ProductCard = ({product, setEditProduct, openEdit, idx, setEditProductIdx, isOpenConfirm}: IProps) => {
 
   const renderCircleColor = product.colors.map(color => <CircleColor key={color} color={color}/>)
   const onEdit = () => {
     setEditProduct(product)
     openEdit()
     setEditProductIdx(idx)
+  }
+  const handleDeleteClick = () => {
+    setEditProduct(product);
+    isOpenConfirm();
   }
 
   return (
@@ -46,7 +51,7 @@ const ProductCard = ({product, setEditProduct, openEdit, idx, setEditProductIdx}
       </div>
       <div className="buttons flex items-center justify-between space-x-3 mt-4 mb-1">
         <Button className="bg-indigo-700 hover:bg-indigo-800 hover:cursor-pointer transition" width="w-full" onClick={onEdit}>Edit</Button>
-        <Button className="bg-rose-700 hover:bg-rose-800 hover:cursor-pointer transition" width="w-full">Delete</Button>
+        <Button onClick={handleDeleteClick} className="bg-rose-700 hover:bg-rose-800 hover:cursor-pointer transition" width="w-full">Delete</Button>
       </div>
     </div>
   );

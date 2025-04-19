@@ -5,10 +5,11 @@ interface IModalProps {
   isOpen: boolean;
   onClose: () => void;
   title?: string;
+  description?: string;
   children: ReactNode;
 }
 
-const Modal = ({isOpen, onClose, title, children}: IModalProps) => {
+const Modal = ({isOpen, onClose, title, description, children}: IModalProps) => {
 
   return (
     <>
@@ -23,6 +24,7 @@ const Modal = ({isOpen, onClose, title, children}: IModalProps) => {
               {title && <DialogTitle as="h3" className="text-base/7 font-medium text-gray-800">
                 {title}
               </DialogTitle>}
+              {description && <p className="text-sm text-gray-500 mt-3">{description}</p>}
               <div className="mt-4">{children}</div>
             </DialogPanel>
           </div>
