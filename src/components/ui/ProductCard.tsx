@@ -1,3 +1,4 @@
+import { memo } from "react";
 import Image from "../Image";
 import { IProduct } from "../interfaces";
 import Button from "../ui/Button";
@@ -57,4 +58,4 @@ const ProductCard = ({product, setEditProduct, openEdit, idx, setEditProductIdx,
   );
 }
 
-export default ProductCard;
+export default memo(ProductCard);
