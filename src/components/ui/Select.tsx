@@ -5,6 +5,7 @@ import { ChevronUpDownIcon } from '@heroicons/react/16/solid'
 import { CheckIcon } from '@heroicons/react/20/solid'
 import { categories } from '../data'
 import { ICategory } from '../interfaces'
+import { memo } from 'react'
 
 interface IProps {
   selected: {name: string, src: string};
@@ -53,4 +54,4 @@ const Select = ({selected, setSelected}: IProps) => {
   )
 }
 
-export default Select;
+export default memo(Select);

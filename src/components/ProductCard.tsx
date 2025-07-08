@@ -1,8 +1,8 @@
 import { memo } from "react";
-import Image from "../Image";
-import { IProduct } from "../interfaces";
-import Button from "../ui/Button";
-import { txtSlicer } from "../utils/function";
+import Image from "./Image";
+import { IProduct } from "./interfaces";
+import Button from "./ui/Button";
+import { txtSlicer } from "./utils/function";
 import CircleColor from "./CircleColor";
 
 interface IProps {

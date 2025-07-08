@@ -1,13 +1,13 @@
 import { ChangeEvent, FormEvent, useCallback, useState } from "react";
 import { categories, colors, formInputsList, productList } from "./components/data";
-import Modal from "./components/Modal";
-import ProductCard from "./components/ui/ProductCard";
+import Modal from "./components/ui/Modal";
+import ProductCard from "./components/ProductCard";
 import Button from "./components/ui/Button";
 import Input from "./components/ui/Input";
 import { IProduct } from "./components/interfaces";
 import { productValidation } from "./components/validation";
-import ErrorMessage from "./components/ui/ErrorMessage";
-import CircleColor from "./components/ui/CircleColor";
+import ErrorMessage from "./components/ErrorMessage";
+import CircleColor from "./components/CircleColor";
 import { v4 as uuid } from "uuid";
 import Select from "./components/ui/Select";
 import { name } from "./components/types";
