@@ -34,17 +34,17 @@ const App = () => {
   const [product, setProduct] = useState<IProduct>(defaultProduct)
   const [isOpenConfirmModal, setIsOpenConfirmModal] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(categories[0])
-  const OnChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+  const OnChangeHandler = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setProduct((prevProduct) => ({
       ...prevProduct,
       [name]: value,
     }));
-    setErrors( ({
+    setErrors((errors) => ({
       ...errors,
       [name]: "",
     }));
-  }
+  }, []);
   // Edit Product
   const [editProduct, setEditProduct] = useState<IProduct>(defaultProduct)
   const [editProductIdx, setEditProductIdx] = useState<number>(0)
