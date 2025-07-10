@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useCallback, useState } from "react";
+import { ChangeEvent, FormEvent, useCallback, useRef, useState } from "react";
 import { categories, colors, formInputsList, productList } from "./components/data";
 import Modal from "./components/ui/Modal";
 import ProductCard from "./components/ProductCard";
@@ -27,6 +27,7 @@ const App = () => {
   }
 
   // state
+  // const inputRef = useRef<null | HTMLInputElement>(null)
   const [isOpen, setIsOpen] = useState(false)
   const [errors, setErrors] = useState({title: "", description: "", src: "", price: "",})
   const [selectedColors, setSelectedColors] = useState<string[]>([])
